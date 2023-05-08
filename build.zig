@@ -5,19 +5,14 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const spork = b.addModule("spork", .{
-        .source_file = .{ .path = "import.zig" },
-        .dependencies = &.{},
-    });
+    const spork = b.addModule("zig-spork", .{ .source_file = .{ .path = "import.zig" } });
 
     const lib = b.addStaticLibrary(.{
-        .name = "spork",
+        .name = "zig-spork",
         .root_source_file = .{ .path = "import.zig" },
         .target = target,
         .optimize = optimize,
     });
-
-    lib.addModule("spork", spork);
     b.installArtifact(lib);
 
     const tests = b.addTest(.{
