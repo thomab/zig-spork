@@ -10,6 +10,16 @@ pub fn build(b: *std.Build) void {
         .dependencies = &.{},
     });
 
+    const lib = b.addStaticLibrary(.{
+        .name = "spork",
+        .root_source_file = .{ .path = "import.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
+
+    lib.addModule("spork", spork);
+    b.installArtifact(lib);
+
     const tests = b.addTest(.{
         .root_source_file = .{ .path = "test_main.zig" },
         .target = target,
