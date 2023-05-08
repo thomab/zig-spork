@@ -102,7 +102,7 @@ pub fn RestrictedPaddingWriter(comptime UnderlyingWriter: type) type {
                 return bytes.len;
             }
 
-            for (bytes) |c, i| {
+            for (bytes, 0..) |c, i| {
                 if (self.len_left == 0) break;
 
                 if (self.codepoint_staging_area) |_| {

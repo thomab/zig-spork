@@ -219,7 +219,7 @@ const InputParser = struct {
         // 1) the sequence starts with '\x1B[' (well... duh)
         // 2) self.bytes.?[3] is an ascii numeric caracter
         if (self.bytes.?.len > 3) {
-            for (self.bytes.?[3..]) |byte, i| {
+            for (self.bytes.?[3..], 0..) |byte, i| {
                 if (!ascii.isDigit(byte)) {
                     const first_num_bytes = self.bytes.?[2 .. i + 3];
                     switch (byte) {
@@ -293,7 +293,7 @@ const InputParser = struct {
     fn doubleNumericEscapeSequence(self: *Self, first_num_bytes: []const u8) Input {
         const semicolon_index = "\x1B[".len + first_num_bytes.len;
         if (self.bytes.?.len > semicolon_index + 1) {
-            for (self.bytes.?[semicolon_index + 1 ..]) |byte, i| {
+            for (self.bytes.?[semicolon_index + 1 ..], 0..) |byte, i| {
                 if (!ascii.isDigit(byte)) {
                     const second_num_bytes = self.bytes.?[semicolon_index + 1 .. i + semicolon_index + 1];
                     switch (byte) {
